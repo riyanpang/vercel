@@ -12,6 +12,7 @@ import {
   debug,
   glob,
   Files,
+  Flag,
   BuildResultV2Typical as BuildResult,
 } from '@vercel/build-utils';
 import { Route, RouteWithHandle } from '@vercel/routing-utils';
@@ -44,6 +45,7 @@ import {
   getFilesMapFromReasons,
   UnwrapPromise,
   getOperationType,
+  VariantsManifest,
 } from './utils';
 import {
   nodeFileTrace,
@@ -100,6 +102,7 @@ export async function serverBuild({
   isCorrectLocaleAPIRoutes,
   lambdaCompressedByteLimit,
   requiredServerFilesManifest,
+  variantsManifest,
 }: {
   appPathRoutesManifest?: Record<string, string>;
   dynamicPages: string[];
@@ -138,6 +141,7 @@ export async function serverBuild({
   imagesManifest?: NextImagesManifest;
   prerenderManifest: NextPrerenderedRoutes;
   requiredServerFilesManifest: NextRequiredServerFilesManifest;
+  variantsManifest: VariantsManifest | null;
 }): Promise<BuildResult> {
   lambdaPages = Object.assign({}, lambdaPages, lambdaAppPaths);
 
@@ -1214,6 +1218,17 @@ export async function serverBuild({
     routesManifest?.rsc?.varyHeader ||
     'RSC, Next-Router-State-Tree, Next-Router-Prefetch';
 
+  const flags: Flag[] = [];
+  if (variantsManifest) {
+    Object.entries(variantsManifest).forEach(([key, value]) => {
+      flags.push({
+        key,
+        ...value,
+        metadata: {},
+      });
+    });
+  }
+
   return {
     wildcard: wildcardConfig,
     images: getImagesConfig(imagesManifest),
@@ -1827,5 +1842,6 @@ export async function serverBuild({
           ]),
     ],
     framework: { version: nextVersion },
+    flags,
   };
 }
