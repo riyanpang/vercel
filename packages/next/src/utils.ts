@@ -2920,7 +2920,8 @@ export function isApiPage(page: string | undefined) {
 export type VariantsManifest = Record<
   string,
   {
-    type: string;
+    defaultValue?: unknown;
+    metadata?: Record<string, unknown>;
   }
 >;
 

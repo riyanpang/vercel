@@ -1224,7 +1224,7 @@ export async function serverBuild({
       flags.push({
         key,
         ...value,
-        metadata: {},
+        metadata: value.metadata ?? {},
       });
     });
   }
