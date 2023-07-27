@@ -1,5 +1,17 @@
 # vercel
 
+## 31.2.0
+
+### Minor Changes
+
+- Add a "Global Options" section to help output ([#10250](https://github.com/vercel/vercel/pull/10250))
+
+### Patch Changes
+
+- Updated dependencies [[`4a8622a10`](https://github.com/vercel/vercel/commit/4a8622a10d52260cb629a1c4a6f797ade05ea154), [`6469ef1b8`](https://github.com/vercel/vercel/commit/6469ef1b8ce37e93f50ab4a108aa0953d7631fe8)]:
+  - @vercel/next@3.9.3
+  - @vercel/remix-builder@1.8.19
+
 ## 31.1.1
 
 ### Patch Changes
